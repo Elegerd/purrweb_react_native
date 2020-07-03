@@ -1,17 +1,31 @@
 {
   "name": "purrweb_internship_react_native",
+  "description": "Приложения создананое в рамках стажировки в Purrweb",
   "version": "0.0.1",
-  "private": true,
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "prettier": "prettier --write \"**/*.+(js|jsx|json|css|md)\""
   },
+  "author": {
+    "name": "Kravtsov Maksim",
+    "email": "kravcov.max@gmail.com"
+  },
+  "license": "ISC",
   "dependencies": {
     "react": "16.11.0",
-    "react-native": "0.62.2"
+    "react-native": "0.62.2",
+    "react-navigation": "^4.4.0",
+    "react-redux": "^7.2.0",
+    "redux": "^4.0.5",
+    "redux-persist": "^6.0.0",
+    "redux-saga": "^1.1.3",
+    "redux-saga-routines": "^3.2.3",
+    "reselect": "^4.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",
@@ -19,8 +33,11 @@
     "@react-native-community/eslint-config": "^0.0.5",
     "babel-jest": "^24.9.0",
     "eslint": "^6.5.1",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
     "jest": "^24.9.0",
     "metro-react-native-babel-preset": "^0.58.0",
+    "prettier": "^2.0.5",
     "react-test-renderer": "16.11.0"
   },
   "jest": {
