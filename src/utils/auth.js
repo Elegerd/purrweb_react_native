@@ -1,18 +1,18 @@
 import request from '../request';
 
-export function signIn(user) {
+export function signInRequest(user) {
   return new Promise((resolve, reject) => {
     request
-      .post(`/auth/sign-in`, user)
+      .post('/auth/sign-in', user)
       .then((response) => resolve(response))
       .catch((error) => reject(error));
   });
 }
 
-export function signUp(user) {
+export function signUpRequest(user) {
   return new Promise((resolve, reject) => {
     request
-      .post(`/auth/sign-up`, user)
+      .post('/auth/sign-up', user)
       .then((response) => resolve(response))
       .catch((error) => reject(error));
   });

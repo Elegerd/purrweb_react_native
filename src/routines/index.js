@@ -1,4 +1,8 @@
 import {createRoutine} from 'redux-saga-routines';
-import {SET_USER} from '../actions/authActions';
+import {LOG_OUT, SIGN_IN, SIGN_UP} from '../actions/authActions';
 
-export const setUser = createRoutine(SET_USER);
+export const signIn = createRoutine(SIGN_IN);
+
+export const signUp = createRoutine(SIGN_UP);
+
+export const logOut = createRoutine(LOG_OUT);

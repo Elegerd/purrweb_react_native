@@ -1,42 +1,36 @@
-import {takeEvery, put, all} from 'redux-saga/effects';
-import {setUser} from '../routines';
-import {signIn, signUp} from '../helpers/auth';
+import {takeEvery, put, call, all} from 'redux-saga/effects';
+import {signIn, signUp} from '../routines';
+import {signInRequest, signUpRequest} from '../utils/auth';
 
 function* signInWatcherSaga() {
-  yield takeEvery(setUser.REQUEST, signInFlow);
+  yield takeEvery(signIn.TRIGGER, signInFlow);
 }
 
 function* signUpWatcherSaga() {
-  yield takeEvery(setUser.REQUEST, signUpFlow);
+  yield takeEvery(signUp.TRIGGER, signUpFlow);
 }
 
-function* signInFlow(action) {
+function* signInFlow({payload}) {
   try {
-    const {email, password} = action;
-    yield put(setUser.request());
-    const response = yield call(signIn, email, password);
-    console.log('SIGN-IN', response);
-    yield put(setUser.success(response));
+    yield put(signIn.request());
+    const response = yield call(signInRequest, payload);
+    yield put(signIn.success(response.data));
   } catch (error) {
-    console.error('SIGN-IN', error);
-    yield put(setUser.failure(error.message));
+    yield put(signIn.failure(error.message));
   } finally {
-    yield put(setUser.fulfill());
+    yield put(signIn.fulfill());
   }
 }
 
-function* signUpFlow(action) {
+function* signUpFlow({payload}) {
   try {
-    const {email, name, password} = action;
-    yield put(setUser.request());
-    const response = yield call(signUp, email, name, password);
-    console.log('SIGN-UP', response);
-    yield put(setUser.success(response));
+    yield put(signUp.request());
+    const response = yield call(signUpRequest, payload);
+    yield put(signUp.success(response.data));
   } catch (error) {
-    console.error('SIGN-UP', error);
-    yield put(setUser.failure(error.message));
+    yield put(signUp.failure(error.message));
   } finally {
-    yield put(setUser.fulfill());
+    yield put(signUp.fulfill());
   }
 }
 export default function* rootSaga() {

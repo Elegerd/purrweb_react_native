@@ -1,4 +1,4 @@
-import {setUser} from '../routines/index';
+import {signIn, signUp, logOut} from '../routines/index';
 
 const initialState = {
   data: null,
@@ -8,22 +8,47 @@ const initialState = {
 
 export function authReducer(state = initialState, action) {
   switch (action.type) {
-    case setUser.TRIGGER:
+    case logOut.TRIGGER:
+      return {
+        ...state,
+        data: null,
+      };
+    case signIn.TRIGGER:
       return {
         ...state,
         loading: true,
       };
-    case setUser.SUCCESS:
+    case signIn.SUCCESS:
       return {
         ...state,
         data: action.payload,
       };
-    case setUser.FAILURE:
+    case signIn.FAILURE:
       return {
         ...state,
         error: action.payload,
       };
-    case setUser.FULFILL:
+    case signIn.FULFILL:
+      return {
+        ...state,
+        loading: false,
+      };
+    case signUp.TRIGGER:
+      return {
+        ...state,
+        loading: true,
+      };
+    case signUp.SUCCESS:
+      return {
+        ...state,
+        data: action.payload,
+      };
+    case signUp.FAILURE:
+      return {
+        ...state,
+        error: action.payload,
+      };
+    case signUp.FULFILL:
       return {
         ...state,
         loading: false,
