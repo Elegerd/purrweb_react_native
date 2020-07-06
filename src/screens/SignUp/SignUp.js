@@ -2,7 +2,7 @@ import React from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
 import SignUpForm from '../../components/SignUpForm/SignUpForm';
 import {useDispatch} from 'react-redux';
-import {signUp} from '../../routines';
+import {signUp} from '../../routines/authRoutines';
 import {backgroundColor, paddingHorizontal} from '../../styles';
 
 const SignUp = () => {

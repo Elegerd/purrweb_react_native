@@ -6,6 +6,9 @@ import CustomField from '../CustomField/CustomField';
 import CustomButton from '../CustomButton/CustomButton';
 import {email, maxLength, minLength, required} from '../../utils/validations';
 
+const emailValidate = [email, required];
+const passwordValidate = [minLength(6), maxLength(16), required];
+
 const SignInForm = ({handleSubmit}) => {
   return (
     <View style={styles.container} keyboardShouldPersistTaps={'handled'}>
@@ -14,7 +17,7 @@ const SignInForm = ({handleSubmit}) => {
         label="Email"
         keyboardType="email-address"
         component={CustomField}
-        validate={[email, required]}
+        validate={emailValidate}
       />
       <Field
         name="password"
@@ -22,7 +25,7 @@ const SignInForm = ({handleSubmit}) => {
         keyboardType="default"
         secureTextEntry={true}
         component={CustomField}
-        validate={[minLength(6), maxLength(16), required]}
+        validate={passwordValidate}
       />
       <CustomButton label={'Submit'} onPress={handleSubmit} />
     </View>

@@ -1,4 +1,4 @@
-import {signIn, signUp, logOut, clearError} from '../routines/index';
+import {signIn, signUp, logOut, clearError} from '../routines/authRoutines';
 
 const initialState = {
   data: null,

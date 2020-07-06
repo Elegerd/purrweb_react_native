@@ -12,6 +12,16 @@ import {
   required,
 } from '../../utils/validations';
 
+const emailValidate = [email, required];
+const nameValidate = [minLength(2), maxLength(32), required];
+const passwordValidate = [minLength(6), maxLength(16), required];
+const confirmPasswordValidate = [
+  minLength(6),
+  maxLength(16),
+  matchPassword,
+  required,
+];
+
 const SignUpForm = ({handleSubmit}) => {
   return (
     <View style={styles.container} keyboardShouldPersistTaps={'handled'}>
@@ -20,14 +30,14 @@ const SignUpForm = ({handleSubmit}) => {
         label="Email"
         keyboardType="email-address"
         component={CustomField}
-        validate={[email, required]}
+        validate={emailValidate}
       />
       <Field
         name="name"
         label="Name"
         keyboardType="default"
         component={CustomField}
-        validate={[minLength(2), maxLength(32), required]}
+        validate={nameValidate}
       />
       <Field
         name="password"
@@ -35,15 +45,15 @@ const SignUpForm = ({handleSubmit}) => {
         keyboardType="default"
         secureTextEntry={true}
         component={CustomField}
-        validate={[minLength(6), maxLength(16), required]}
+        validate={passwordValidate}
       />
       <Field
-        name="confirm_password"
+        name="confirm-password"
         label="Confirm password"
         keyboardType="default"
         secureTextEntry={true}
         component={CustomField}
-        validate={[minLength(6), maxLength(16), matchPassword, required]}
+        validate={confirmPasswordValidate}
       />
       <CustomButton label={'Submit'} onPress={handleSubmit} />
     </View>

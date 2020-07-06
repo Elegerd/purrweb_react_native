@@ -3,7 +3,7 @@ import {SafeAreaView, StyleSheet, Text, Alert} from 'react-native';
 import SignInForm from '../../components/SignInForm/SignInForm';
 import {useDispatch, useSelector} from 'react-redux';
 import {getAuth} from '../../selectors/authSelector';
-import {clearError, signIn} from '../../routines/index';
+import {clearError, signIn} from '../../routines/authRoutines';
 import CustomButton from '../../components/CustomButton/CustomButton';
 import PropTypes from 'prop-types';
 import {

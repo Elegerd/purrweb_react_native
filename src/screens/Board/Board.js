@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {SafeAreaView, StyleSheet, Text} from 'react-native';
 import {useDispatch} from 'react-redux';
-import {logOut} from '../../routines';
+import {logOut} from '../../routines/authRoutines';
 import {
   backgroundColor,
   fontColor,
