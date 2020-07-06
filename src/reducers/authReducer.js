@@ -1,4 +1,4 @@
-import {signIn, signUp, logOut} from '../routines/index';
+import {signIn, signUp, logOut, clearError} from '../routines/index';
 
 const initialState = {
   data: null,
@@ -8,20 +8,29 @@ const initialState = {
 
 export function authReducer(state = initialState, action) {
   switch (action.type) {
+    case clearError.TRIGGER:
+      return {
+        ...state,
+        error: null,
+      };
     case logOut.TRIGGER:
       return {
         ...state,
         data: null,
+        loading: false,
+        error: null,
       };
     case signIn.TRIGGER:
       return {
         ...state,
         loading: true,
+        error: null,
       };
     case signIn.SUCCESS:
       return {
         ...state,
         data: action.payload,
+        error: null,
       };
     case signIn.FAILURE:
       return {
@@ -37,11 +46,13 @@ export function authReducer(state = initialState, action) {
       return {
         ...state,
         loading: true,
+        error: null,
       };
     case signUp.SUCCESS:
       return {
         ...state,
         data: action.payload,
+        error: null,
       };
     case signUp.FAILURE:
       return {

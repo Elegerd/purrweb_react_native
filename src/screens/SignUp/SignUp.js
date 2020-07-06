@@ -1,8 +1,9 @@
 import React from 'react';
-import {SafeAreaView, StyleSheet, Text} from 'react-native';
+import {ScrollView, StyleSheet} from 'react-native';
 import SignUpForm from '../../components/SignUpForm/SignUpForm';
 import {useDispatch} from 'react-redux';
 import {signUp} from '../../routines';
+import {backgroundColor, paddingHorizontal} from '../../styles';
 
 const SignUp = () => {
   const dispatch = useDispatch();
@@ -12,19 +13,20 @@ const SignUp = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Text>Sign Up</Text>
+    <ScrollView
+      contentInsetAdjustmentBehavior={'automatic'}
+      style={styles.container}>
       <SignUpForm onSubmit={handleSubmit} />
-    </SafeAreaView>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: backgroundColor,
+    paddingHorizontal: paddingHorizontal,
+    paddingVertical: 15,
   },
 });
 

@@ -2,6 +2,7 @@ import React from 'react';
 import {useSelector} from 'react-redux';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
+import {getAuth} from './selectors/authSelector';
 import SignIn from './screens/SignIn/SignIn';
 import SignUp from './screens/SignUp/SignUp';
 import Board from './screens/Board/Board';
@@ -9,7 +10,7 @@ import Board from './screens/Board/Board';
 const Stack = createStackNavigator();
 
 const App = () => {
-  const {data} = useSelector((state) => state.auth);
+  const {data} = useSelector(getAuth);
 
   return (
     <NavigationContainer>

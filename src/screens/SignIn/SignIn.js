@@ -1,11 +1,33 @@
-import React from 'react';
-import {SafeAreaView, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import React, {useEffect} from 'react';
+import {SafeAreaView, StyleSheet, Text, Alert} from 'react-native';
 import SignInForm from '../../components/SignInForm/SignInForm';
-import {useDispatch} from 'react-redux';
-import {signIn} from '../../routines/index';
+import {useDispatch, useSelector} from 'react-redux';
+import {getAuth} from '../../selectors/authSelector';
+import {clearError, signIn} from '../../routines/index';
+import CustomButton from '../../components/CustomButton/CustomButton';
+import PropTypes from 'prop-types';
+import {
+  backgroundColor,
+  fontColor,
+  fontFamily,
+  headerFontSize,
+  paddingHorizontal,
+} from '../../styles';
 
 const SignIn = ({navigation}) => {
   const dispatch = useDispatch();
+  const {error} = useSelector(getAuth);
+
+  useEffect(() => {
+    if (error) {
+      Alert.alert(
+        'Error message',
+        error,
+        [{text: 'OK', onPress: () => dispatch(clearError())}],
+        {cancelable: false},
+      );
+    }
+  }, [dispatch, error]);
 
   const handleSubmit = (values) => {
     dispatch(signIn(values));
@@ -17,34 +39,32 @@ const SignIn = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text>Sign In</Text>
+      <Text style={styles.text}>Sign In</Text>
       <SignInForm onSubmit={handleSubmit} />
-      <TouchableOpacity style={styles.button} onPress={handleOnClickSignUp}>
-        <Text style={styles.text}>Sign Up</Text>
-      </TouchableOpacity>
+      <CustomButton label={'Sign Up'} onPress={handleOnClickSignUp} />
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  button: {
-    backgroundColor: '#BFB393',
-    height: 30,
-    lineHeight: 30,
-    marginTop: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 250,
-  },
   text: {
-    color: 'white',
+    fontSize: headerFontSize,
+    fontFamily: fontFamily,
+    fontWeight: 'bold',
+    color: fontColor,
+    paddingBottom: 30,
   },
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
-    alignItems: 'center',
+    backgroundColor: backgroundColor,
+    paddingHorizontal: paddingHorizontal,
+    alignItems: 'stretch',
     justifyContent: 'center',
   },
 });
+
+SignIn.propTypes = {
+  navigation: PropTypes.object,
+};
 
 export default SignIn;

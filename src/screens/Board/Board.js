@@ -1,10 +1,20 @@
-import React from 'react';
-import {SafeAreaView, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import React, {useEffect} from 'react';
+import {SafeAreaView, StyleSheet, Text} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {logOut} from '../../routines';
+import {
+  backgroundColor,
+  fontColor,
+  fontFamily,
+  fontSize,
+  paddingHorizontal,
+} from '../../styles';
+import CustomButton from '../../components/CustomButton/CustomButton';
 
 const Board = () => {
   const dispatch = useDispatch();
+
+  useEffect(() => {}, []);
 
   const handleOnClickLogOut = () => {
     dispatch(logOut());
@@ -12,31 +22,24 @@ const Board = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text>Board</Text>
-      <TouchableOpacity style={styles.button} onPress={handleOnClickLogOut}>
-        <Text style={styles.text}>Log Out</Text>
-      </TouchableOpacity>
+      <Text style={styles.text}>Board</Text>
+      <CustomButton label={'Log Out'} onPress={handleOnClickLogOut} />
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  button: {
-    backgroundColor: '#BFB393',
-    height: 30,
-    lineHeight: 30,
-    marginTop: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 250,
-  },
   text: {
-    color: 'white',
+    fontSize: fontSize,
+    fontFamily: fontFamily,
+
+    color: fontColor,
   },
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
-    alignItems: 'center',
+    backgroundColor: backgroundColor,
+    paddingHorizontal: paddingHorizontal,
+    alignItems: 'stretch',
     justifyContent: 'center',
   },
 });

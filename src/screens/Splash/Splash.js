@@ -1,5 +1,6 @@
-import {ActivityIndicator, StatusBar, View, StyleSheet} from 'react-native';
 import React from 'react';
+import {ActivityIndicator, StatusBar, View, StyleSheet} from 'react-native';
+import {backgroundColor} from '../../styles';
 
 const Splash = () => {
   return (
@@ -13,7 +14,7 @@ const Splash = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: backgroundColor,
     alignItems: 'center',
     justifyContent: 'center',
   },

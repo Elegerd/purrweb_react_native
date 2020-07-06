@@ -1,20 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {reduxForm, Field} from 'redux-form';
-import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import CustomField from '../CustomField/CustomField';
+import CustomButton from '../CustomButton/CustomButton';
+import {email, maxLength, minLength, required} from '../../utils/validations';
 
 const SignInForm = ({handleSubmit}) => {
-  const formStates = [
-    'asyncValidating',
-    'dirty',
-    'pristine',
-    'valid',
-    'invalid',
-    'submitting',
-    'submitSucceeded',
-    'submitFailed',
-  ];
-
   return (
     <View style={styles.container} keyboardShouldPersistTaps={'handled'}>
       <Field
@@ -22,6 +14,7 @@ const SignInForm = ({handleSubmit}) => {
         label="Email"
         keyboardType="email-address"
         component={CustomField}
+        validate={[email, required]}
       />
       <Field
         name="password"
@@ -29,31 +22,22 @@ const SignInForm = ({handleSubmit}) => {
         keyboardType="default"
         secureTextEntry={true}
         component={CustomField}
+        validate={[minLength(6), maxLength(16), required]}
       />
-      <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-        <Text style={styles.text}>Submit</Text>
-      </TouchableOpacity>
+      <CustomButton label={'Submit'} onPress={handleSubmit} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  button: {
-    backgroundColor: '#BFB393',
-    height: 30,
-    lineHeight: 30,
-    marginTop: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 250,
-  },
-  text: {
-    color: 'white',
-  },
   container: {
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'stretch',
   },
 });
+
+SignInForm.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+};
 
 export default reduxForm({form: 'signIn'})(SignInForm);
