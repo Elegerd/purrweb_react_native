@@ -3,25 +3,23 @@ import PropTypes from 'prop-types';
 import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {
   backgroundColor,
-  fontSize,
   shadowColor,
   primaryColor,
   fontFamily,
+  otherFontSize,
 } from '../../styles';
 
 const CustomButton = ({label, ...buttonProps}) => {
   return (
     <TouchableOpacity {...buttonProps} style={styles.button}>
-      <Text style={styles.text}>{label}</Text>
+      <Text style={styles.text}>{label.toUpperCase()}</Text>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   button: {
-    minHeight: 50,
-    fontFamily: fontFamily,
-
+    minHeight: 30,
     backgroundColor: primaryColor,
     justifyContent: 'center',
     alignItems: 'center',
@@ -33,9 +31,10 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   text: {
-    fontSize: fontSize,
+    fontSize: otherFontSize,
     fontFamily: fontFamily,
-
+    lineHeight: 14,
+    fontWeight: 'bold',
     color: backgroundColor,
   },
 });

@@ -1,4 +1,4 @@
-export const fontSize = 16;
+export const fontSize = 17;
 export const headerFontSize = 24;
 export const otherFontSize = 12;
 export const fontFamily = 'SF UI Text';

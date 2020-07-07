@@ -6,7 +6,7 @@ export function signInRequest(user) {
       .post('/auth/sign-in', user)
       .then(({data}) => {
         if (typeof data.token === 'undefined') {
-          throw new Error('Sign In failed');
+          throw new Error('Sign In: Something went wrong');
         }
         return resolve(data);
       })
@@ -20,7 +20,7 @@ export function signUpRequest(user) {
       .post('/auth/sign-up', user)
       .then(({data}) => {
         if (typeof data.token === 'undefined') {
-          throw new Error('Sign Up failed');
+          throw new Error('Sign Up: Something went wrong');
         }
         return resolve(data);
       })

@@ -1,28 +1,24 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
 import {backgroundColor, paddingHorizontal} from '../../styles';
-import {fetchColumn} from '../../routines/columnRoutines';
+import {addColumn} from '../../routines/columnRoutines';
+import {useDispatch, useSelector} from 'react-redux';
+import NewColumnForm from '../../components/NewColumnForm/NewColumnForm';
 import {getColumns} from '../../selectors/columnSelector';
-import ColumnCard from '../../components/ColumnCard/ColumnCard';
 import Splash from '../Splash/Splash';
 
-const Board = () => {
+const NewColumn = () => {
   const dispatch = useDispatch();
-  const {data: columns, loading} = useSelector(getColumns);
+  const {loading} = useSelector(getColumns);
 
-  useEffect(() => {
-    dispatch(fetchColumn());
-  }, [dispatch]);
+  const handleSubmit = (values) => dispatch(addColumn(values));
 
   return loading ? (
     <Splash />
   ) : (
     <ScrollView style={styles.scrollView}>
       <SafeAreaView style={styles.container}>
-        {columns.map((column) => (
-          <ColumnCard key={column.id} column={column} />
-        ))}
+        <NewColumnForm onSubmit={handleSubmit} />
       </SafeAreaView>
     </ScrollView>
   );
@@ -42,4 +38,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Board;
+export default NewColumn;

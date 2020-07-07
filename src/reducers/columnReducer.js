@@ -1,4 +1,4 @@
-import {fetchColumn} from '../routines/columnRoutines';
+import {fetchColumn, addColumn} from '../routines/columnRoutines';
 
 const initialState = {
   data: null,
@@ -8,6 +8,28 @@ const initialState = {
 
 export function columnReducer(state = initialState, action) {
   switch (action.type) {
+    case addColumn.TRIGGER:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case addColumn.SUCCESS:
+      return {
+        ...state,
+        data: [...state.data, action.payload],
+        error: null,
+      };
+    case addColumn.FAILURE:
+      return {
+        ...state,
+        error: action.payload,
+      };
+    case addColumn.FULFILL:
+      return {
+        ...state,
+        loading: false,
+      };
     case fetchColumn.TRIGGER:
       return {
         ...state,

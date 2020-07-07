@@ -1,29 +1,24 @@
 import React, {useEffect} from 'react';
 import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
 import {backgroundColor, paddingHorizontal} from '../../styles';
-import {fetchColumn} from '../../routines/columnRoutines';
-import {getColumns} from '../../selectors/columnSelector';
-import ColumnCard from '../../components/ColumnCard/ColumnCard';
+import {fetchCard} from '../../routines/cardRoutines';
+import {useDispatch, useSelector} from 'react-redux';
+import {getCards} from '../../selectors/cardSelector';
 import Splash from '../Splash/Splash';
 
-const Board = () => {
+const Column = () => {
   const dispatch = useDispatch();
-  const {data: columns, loading} = useSelector(getColumns);
+  const {data: cards, loading} = useSelector(getCards);
 
   useEffect(() => {
-    dispatch(fetchColumn());
+    dispatch(fetchCard());
   }, [dispatch]);
 
   return loading ? (
     <Splash />
   ) : (
     <ScrollView style={styles.scrollView}>
-      <SafeAreaView style={styles.container}>
-        {columns.map((column) => (
-          <ColumnCard key={column.id} column={column} />
-        ))}
-      </SafeAreaView>
+      <SafeAreaView style={styles.container}></SafeAreaView>
     </ScrollView>
   );
 };
@@ -42,4 +37,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Board;
+export default Column;
