@@ -2,26 +2,34 @@ import React, {useEffect} from 'react';
 import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {backgroundColor, paddingHorizontal} from '../../styles';
-import {fetchColumn} from '../../routines/columnRoutines';
-import {getColumns} from '../../selectors/columnSelector';
-import ColumnCard from '../../components/ColumnCard/ColumnCard';
+import {fetchAllData} from '../../routines/dataRoutines';
+import {getColumnIsLoading, getColumns} from '../../selectors/columnSelector';
+import ColumnItem from '../../components/ColumnItem/ColumnItem';
 import Splash from '../Splash/Splash';
 
-const Board = () => {
+const Board = ({navigation}) => {
   const dispatch = useDispatch();
-  const {data: columns, loading} = useSelector(getColumns);
+  const columns = useSelector(getColumns);
+  const isLoading = useSelector(getColumnIsLoading);
 
   useEffect(() => {
-    dispatch(fetchColumn());
+    dispatch(fetchAllData());
   }, [dispatch]);
 
-  return loading ? (
+  const handleOnClick = (column) => () =>
+    navigation.navigate('Column', {column});
+
+  return isLoading ? (
     <Splash />
   ) : (
     <ScrollView style={styles.scrollView}>
       <SafeAreaView style={styles.container}>
         {columns.map((column) => (
-          <ColumnCard key={column.id} column={column} />
+          <ColumnItem
+            key={column.id}
+            column={column}
+            handleOnClick={handleOnClick}
+          />
         ))}
       </SafeAreaView>
     </ScrollView>

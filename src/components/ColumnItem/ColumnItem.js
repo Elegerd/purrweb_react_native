@@ -3,20 +3,19 @@ import PropTypes from 'prop-types';
 import {StyleSheet, TouchableOpacity, Text} from 'react-native';
 import {borderColor, fontColor, fontFamily, fontSize} from '../../styles';
 
-const ColumnCard = ({column}) => (
-  <TouchableOpacity
-    style={styles.container}
-    onPress={() => console.log('CLICK')}>
+const ColumnItem = ({column, handleOnClick}) => (
+  <TouchableOpacity style={styles.container} onPress={handleOnClick(column)}>
     <Text style={styles.text}>{column.title}</Text>
   </TouchableOpacity>
 );
 
-ColumnCard.propTypes = {
+ColumnItem.propTypes = {
   column: PropTypes.shape({
     id: PropTypes.number,
     title: PropTypes.string,
     userId: PropTypes.number,
-  }),
+  }).isRequired,
+  handleOnClick: PropTypes.func.isRequired,
 };
 
 const styles = StyleSheet.create({
@@ -39,4 +38,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ColumnCard;
+export default ColumnItem;

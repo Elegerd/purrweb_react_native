@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {SafeAreaView, StyleSheet, Text, Alert} from 'react-native';
 import SignInForm from '../../components/SignInForm/SignInForm';
 import {useDispatch, useSelector} from 'react-redux';
-import {getAuth} from '../../selectors/authSelector';
+import {getAuthError} from '../../selectors/authSelector';
 import {clearError, signIn} from '../../routines/authRoutines';
 import CustomButton from '../../components/CustomButton/CustomButton';
 import PropTypes from 'prop-types';
@@ -16,7 +16,7 @@ import {
 
 const SignIn = ({navigation}) => {
   const dispatch = useDispatch();
-  const {error} = useSelector(getAuth);
+  const error = useSelector(getAuthError);
 
   useEffect(() => {
     if (error) {

@@ -1,40 +1,71 @@
 import React, {useEffect} from 'react';
-import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
-import {backgroundColor, paddingHorizontal} from '../../styles';
-import {fetchCard} from '../../routines/cardRoutines';
-import {useDispatch, useSelector} from 'react-redux';
-import {getCards} from '../../selectors/cardSelector';
-import Splash from '../Splash/Splash';
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+import {ScrollView, StyleSheet} from 'react-native';
+import {
+  backgroundColor,
+  paddingHorizontal,
+  inactiveColor,
+  secondColor,
+} from '../../styles';
+import {useSelector} from 'react-redux';
+import {getFilterColumnCards} from '../../selectors/cardSelector';
+import CardList from '../../components/CardList/CardList';
+import PropTypes from 'prop-types';
 
-const Column = () => {
-  const dispatch = useDispatch();
-  const {data: cards, loading} = useSelector(getCards);
+const Tab = createMaterialTopTabNavigator();
+export const ColumnContext = React.createContext();
+
+const Column = ({
+  navigation,
+  route: {
+    params: {column},
+  },
+}) => {
+  const {checkedCards, uncheckedCards} = useSelector(
+    getFilterColumnCards(column),
+  );
 
   useEffect(() => {
-    dispatch(fetchCard());
-  }, [dispatch]);
+    navigation.setOptions({title: column.title, columnId: column.id});
+  }, [column.title, navigation]);
 
-  return loading ? (
-    <Splash />
-  ) : (
-    <ScrollView style={styles.scrollView}>
-      <SafeAreaView style={styles.container}></SafeAreaView>
-    </ScrollView>
+  return (
+    <ColumnContext.Provider value={{checkedCards, uncheckedCards, column}}>
+      <Tab.Navigator
+        tabBarOptions={{
+          activeTintColor: secondColor,
+          inactiveTintColor: inactiveColor,
+          indicatorStyle: {
+            backgroundColor: secondColor,
+          },
+        }}>
+        <Tab.Screen
+          name="CHECKED CARDS"
+          component={CardList}
+          initialParams={{
+            isChecked: true,
+            isShowInput: true,
+          }}
+        />
+        <Tab.Screen
+          name="UNCHECKED CARDS"
+          component={CardList}
+          initialParams={{
+            isChecked: false,
+            isShowInput: false,
+          }}
+        />
+      </Tab.Navigator>
+    </ColumnContext.Provider>
   );
 };
 
-const styles = StyleSheet.create({
-  scrollView: {
-    flex: 1,
-    backgroundColor: backgroundColor,
-  },
-  container: {
-    flex: 1,
-    alignItems: 'stretch',
-    justifyContent: 'center',
-    paddingHorizontal: paddingHorizontal,
-    paddingVertical: 5,
-  },
-});
+Column.propTypes = {
+  column: PropTypes.shape({
+    id: PropTypes.number,
+    title: PropTypes.string,
+    userId: PropTypes.number,
+  }),
+};
 
 export default Column;
