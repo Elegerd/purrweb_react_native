@@ -8,3 +8,12 @@ export function removeColumnRequest(columnId) {
       .catch((error) => reject(error));
   });
 }
+
+export function removeCardRequest(cardId) {
+  return new Promise((resolve, reject) => {
+    request
+      .delete(`/cards/${cardId}`)
+      .then(({data}) => resolve(data))
+      .catch((error) => reject(error));
+  });
+}

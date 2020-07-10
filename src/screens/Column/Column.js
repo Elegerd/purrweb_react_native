@@ -1,12 +1,6 @@
 import React, {useEffect} from 'react';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import {ScrollView, StyleSheet} from 'react-native';
-import {
-  backgroundColor,
-  paddingHorizontal,
-  inactiveColor,
-  secondColor,
-} from '../../styles';
+import {inactiveColor, secondColor} from '../../styles';
 import {useSelector} from 'react-redux';
 import {getFilterColumnCards} from '../../selectors/cardSelector';
 import CardList from '../../components/CardList/CardList';
@@ -27,11 +21,12 @@ const Column = ({
 
   useEffect(() => {
     navigation.setOptions({title: column.title, columnId: column.id});
-  }, [column.title, navigation]);
+  }, [column.id, column.title, navigation]);
 
   return (
     <ColumnContext.Provider value={{checkedCards, uncheckedCards, column}}>
       <Tab.Navigator
+        swipeEnabled={false}
         tabBarOptions={{
           activeTintColor: secondColor,
           inactiveTintColor: inactiveColor,

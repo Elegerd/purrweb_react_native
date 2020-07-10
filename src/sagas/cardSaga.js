@@ -1,7 +1,13 @@
 import {call, put, takeEvery} from 'redux-saga/effects';
-import {fetchCard, addCard, changeCard} from '../routines/cardRoutines';
+import {
+  fetchCard,
+  addCard,
+  changeCard,
+  removeCard,
+} from '../routines/cardRoutines';
 import {fetchCardRequest} from '../utils/fetchData';
 import {createCardRequest} from '../utils/createData';
+import {removeCardRequest} from '../utils/removeData';
 import {changeCardRequest} from '../utils/changeData';
 
 export function* fetchCardWatcherSaga() {
@@ -10,6 +16,10 @@ export function* fetchCardWatcherSaga() {
 
 export function* createCardWatcherSaga() {
   yield takeEvery(addCard.TRIGGER, createCardFlow);
+}
+
+export function* removeCardWatcherSaga() {
+  yield takeEvery(removeCard.TRIGGER, removeCardFlow);
 }
 
 export function* changeCardWatcherSaga() {
@@ -37,6 +47,18 @@ function* createCardFlow({payload}) {
     yield put(addCard.failure(error.message));
   } finally {
     yield put(addCard.fulfill());
+  }
+}
+
+function* removeCardFlow({payload}) {
+  try {
+    yield put(removeCard.request());
+    yield call(removeCardRequest, payload);
+    yield put(removeCard.success(payload));
+  } catch (error) {
+    yield put(removeCard.failure(error.message));
+  } finally {
+    yield put(removeCard.fulfill());
   }
 }
 

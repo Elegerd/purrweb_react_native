@@ -9,6 +9,7 @@ import {
 import {
   fetchCardWatcherSaga,
   createCardWatcherSaga,
+  removeCardWatcherSaga,
   changeCardWatcherSaga,
 } from './cardSaga';
 import {fetchCommentWatcherSaga, createCommentWatcherSaga} from './commentSaga';
@@ -25,6 +26,7 @@ export default function* rootSaga() {
     createCardWatcherSaga(),
     createCommentWatcherSaga(),
     removeColumnWatcherSaga(),
+    removeCardWatcherSaga(),
     changeCardWatcherSaga(),
   ]);
 }

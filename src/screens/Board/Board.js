@@ -19,7 +19,7 @@ const Board = ({navigation}) => {
   const handleOnClick = (column) => () =>
     navigation.navigate('Column', {column});
 
-  return isLoading ? (
+  return isLoading || !columns ? (
     <Splash />
   ) : (
     <ScrollView style={styles.scrollView}>

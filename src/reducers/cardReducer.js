@@ -1,5 +1,10 @@
 import {fetchAllData} from '../routines/dataRoutines';
-import {addCard, changeCard, fetchCard} from '../routines/cardRoutines';
+import {
+  addCard,
+  changeCard,
+  fetchCard,
+  removeCard,
+} from '../routines/cardRoutines';
 
 const initialState = {
   data: null,
@@ -31,6 +36,28 @@ export function cardReducer(state = initialState, action) {
         ...state,
         loading: false,
       };
+    case removeCard.TRIGGER:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case removeCard.SUCCESS:
+      return {
+        ...state,
+        data: state.data.filter((column) => column.id !== action.payload),
+        error: null,
+      };
+    case removeCard.FAILURE:
+      return {
+        ...state,
+        error: action.payload,
+      };
+    case removeCard.FULFILL:
+      return {
+        ...state,
+        loading: false,
+      };
     case changeCard.TRIGGER:
       return {
         ...state,
@@ -41,7 +68,9 @@ export function cardReducer(state = initialState, action) {
       return {
         ...state,
         data: state.data.map((card) => {
-          if (card.id === action.payload.id) return action.payload;
+          if (card.id === action.payload.id) {
+            return action.payload;
+          }
           return card;
         }),
         error: null,

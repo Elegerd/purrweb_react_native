@@ -2,17 +2,27 @@ import React, {useState, useContext} from 'react';
 import PropTypes from 'prop-types';
 import {useDispatch} from 'react-redux';
 import {Input} from 'react-native-elements';
-import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
+import {
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import {SwipeRow} from 'react-native-swipe-list-view';
 import {
   backgroundColor,
   borderColor,
+  dangerColor,
+  otherFontSize,
   paddingHorizontal,
   safeColor,
   shadowColor,
 } from '../../styles';
 import CardItem from '../../components/CardItem/CardItem';
 import Icon from '../CustomIcon/CustomIcon';
-import {addCard, changeCard} from '../../routines/cardRoutines';
+import {addCard, changeCard, removeCard} from '../../routines/cardRoutines';
 import {ColumnContext} from '../../screens/Column/Column';
 
 const CardList = ({
@@ -45,6 +55,10 @@ const CardList = ({
     dispatch(changeCard({id: card.id, checked: !card.checked}));
   };
 
+  const handleOnClickRemoveCard = (cardId) => () => {
+    dispatch(removeCard(cardId));
+  };
+
   const handleOnChange = (e) => {
     const {text} = e.nativeEvent;
     setTitle(text);
@@ -72,12 +86,19 @@ const CardList = ({
           />
         )}
         {cards.map((card) => (
-          <CardItem
-            key={card.id}
-            card={card}
-            handleOnClickCard={handleOnClickCard(card)}
-            handleOnClickCheckBox={handleOnClickCheckBox(card)}
-          />
+          <SwipeRow key={card.id} disableRightSwipe={true} rightOpenValue={-70}>
+            <View style={styles.standaloneRowBack}>
+              <Text style={styles.standaloneRowBackText} />
+              <TouchableOpacity onPress={handleOnClickRemoveCard(card.id)}>
+                <Text style={styles.standaloneRowBackText}>Delete</Text>
+              </TouchableOpacity>
+            </View>
+            <CardItem
+              card={card}
+              handleOnClickCard={handleOnClickCard(card)}
+              handleOnClickCheckBox={handleOnClickCheckBox(card)}
+            />
+          </SwipeRow>
         ))}
       </SafeAreaView>
     </ScrollView>
@@ -98,7 +119,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
   },
   inputContainer: {
-    paddingHorizontal: 0,
+    paddingHorizontal: paddingHorizontal,
     marginHorizontal: 0,
     paddingVertical: 15,
   },
@@ -116,8 +137,20 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'stretch',
     justifyContent: 'center',
-    paddingHorizontal: paddingHorizontal,
     paddingVertical: 5,
+  },
+  standaloneRowBack: {
+    backgroundColor: dangerColor,
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  standaloneRowBackText: {
+    color: backgroundColor,
+    fontSize: otherFontSize,
+    textAlign: 'center',
+    minWidth: 70,
   },
 });
 

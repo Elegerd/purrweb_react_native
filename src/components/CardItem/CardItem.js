@@ -3,32 +3,39 @@ import PropTypes from 'prop-types';
 import {StyleSheet, TouchableOpacity, Text, View} from 'react-native';
 import {CheckBox} from 'react-native-elements';
 import {
+  backgroundColor,
   borderColor,
   fontColor,
   fontFamily,
   fontSize,
   otherFontSize,
+  paddingHorizontal,
   safeColor,
 } from '../../styles';
 import Icon from '../CustomIcon/CustomIcon';
 
 const CardItem = ({card, handleOnClickCard, handleOnClickCheckBox}) => (
-  <TouchableOpacity style={styles.container} onPress={handleOnClickCard}>
-    <View style={styles.textContainer}>
-      <CheckBox
-        onPress={handleOnClickCheckBox}
-        uncheckedIcon={<Icon name={'square-outline'} color={fontColor} />}
-        checkedIcon={<Icon name={'checkbox-outline'} color={fontColor} />}
-        checked={card.checked}
-        containerStyle={styles.checkbox}
-      />
-      <Text ellipsizeMode="tail" numberOfLines={1} style={styles.textTitle}>
-        {card.title}
-      </Text>
-    </View>
-    <View style={styles.commentContainer}>
-      <Icon color={safeColor} name={'chatbubbles-outline'} />
-      <Text style={styles.textComment}>{card.commentsIds.length}</Text>
+  <TouchableOpacity
+    activeOpacity={1}
+    style={styles.wrapper}
+    onPress={handleOnClickCard}>
+    <View style={styles.container}>
+      <View style={styles.textContainer}>
+        <CheckBox
+          onPress={handleOnClickCheckBox}
+          uncheckedIcon={<Icon name={'square-outline'} color={fontColor} />}
+          checkedIcon={<Icon name={'checkbox-outline'} color={fontColor} />}
+          checked={card.checked}
+          containerStyle={styles.checkbox}
+        />
+        <Text ellipsizeMode="tail" numberOfLines={1} style={styles.textTitle}>
+          {card.title}
+        </Text>
+      </View>
+      <View style={styles.commentContainer}>
+        <Icon color={safeColor} name={'chatbubbles-outline'} />
+        <Text style={styles.textComment}>{card.commentsIds.length}</Text>
+      </View>
     </View>
   </TouchableOpacity>
 );
@@ -81,13 +88,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   container: {
+    flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     borderBottomWidth: 1,
     borderColor: borderColor,
+    marginHorizontal: paddingHorizontal,
+  },
+  wrapper: {
     minHeight: 70,
-    marginVertical: 5,
+    backgroundColor: backgroundColor,
   },
 });
 

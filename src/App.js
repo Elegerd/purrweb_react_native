@@ -116,15 +116,10 @@ const App = () => {
                       color={secondColor}
                       onPress={() => navigation.goBack()}
                     />
-                    <Text style={{color: fontColor, fontSize: fontSize}}>
-                      {options.title}
-                    </Text>
+                    <Text style={styles.headerTopNavText}>{options.title}</Text>
                     <CustomMenuIcon
                       iconName={'settings-outline'}
-                      menuContainerStyle={{
-                        flexDirection: 'row',
-                        justifyContent: 'flex-end',
-                      }}
+                      menuContainerStyle={styles.headerTopNavIcon}
                       options={[
                         {
                           title: 'Remove',
@@ -154,6 +149,14 @@ const styles = StyleSheet.create({
   },
   headerTopNav: {
     backgroundColor: backgroundColor,
+  },
+  headerTopNavText: {
+    color: fontColor,
+    fontSize: fontSize,
+  },
+  headerTopNavIcon: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
   },
 });
 
