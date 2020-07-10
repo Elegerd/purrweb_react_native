@@ -9,12 +9,19 @@ import Icon from './components/CustomIcon/CustomIcon';
 import SignIn from './screens/SignIn/SignIn';
 import SignUp from './screens/SignUp/SignUp';
 import Board from './screens/Board/Board';
-import {backgroundColor, fontColor, fontSize, secondColor} from './styles';
+import {
+  backgroundColor,
+  fontColor,
+  fontSize,
+  primaryColor,
+  secondColor,
+} from './styles';
 import {StyleSheet, Text} from 'react-native';
 import NewColumn from './screens/NewColumn/NewColumn';
 import CustomHeader from './components/CustomHeader/CustomHeader';
 import Column from './screens/Column/Column';
 import CustomMenuIcon from './components/CustomMenuItem/CustomMenuItem';
+import CardDetails from './screens/CardDetails/CardDetails';
 
 const Stack = createStackNavigator();
 
@@ -110,16 +117,16 @@ const App = () => {
                     descriptor: {options},
                   },
                 }) => (
-                  <CustomHeader style={styles.headerTopNav}>
+                  <CustomHeader style={styles.headerColumn}>
                     <Icon
                       name={'arrow-back-outline'}
                       color={secondColor}
                       onPress={() => navigation.goBack()}
                     />
-                    <Text style={styles.headerTopNavText}>{options.title}</Text>
+                    <Text style={styles.headerColumnText}>{options.title}</Text>
                     <CustomMenuIcon
                       iconName={'settings-outline'}
-                      menuContainerStyle={styles.headerTopNavIcon}
+                      menuContainerStyle={styles.headerColumnIcon}
                       options={[
                         {
                           title: 'Remove',
@@ -129,6 +136,21 @@ const App = () => {
                           ),
                         },
                       ]}
+                    />
+                  </CustomHeader>
+                ),
+              }}
+            />
+            <Stack.Screen
+              name="Card Details"
+              component={CardDetails}
+              options={{
+                header: ({navigation}) => (
+                  <CustomHeader style={styles.headerCardDetails}>
+                    <Icon
+                      name={'arrow-back-outline'}
+                      color={secondColor}
+                      onPress={() => navigation.goBack()}
                     />
                   </CustomHeader>
                 ),
@@ -147,16 +169,20 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: fontSize,
   },
-  headerTopNav: {
+  headerColumn: {
     backgroundColor: backgroundColor,
   },
-  headerTopNavText: {
+  headerColumnText: {
     color: fontColor,
     fontSize: fontSize,
   },
-  headerTopNavIcon: {
+  headerColumnIcon: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
+  },
+  headerCardDetails: {
+    borderBottomWidth: 0,
+    backgroundColor: primaryColor,
   },
 });
 

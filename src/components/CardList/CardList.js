@@ -26,6 +26,7 @@ import {addCard, changeCard, removeCard} from '../../routines/cardRoutines';
 import {ColumnContext} from '../../screens/Column/Column';
 
 const CardList = ({
+  navigation,
   route: {
     params: {isChecked, isShowInput},
   },
@@ -48,7 +49,7 @@ const CardList = ({
   };
 
   const handleOnClickCard = (card) => () => {
-    console.log('CLICK');
+    navigation.navigate('Card Details', {card});
   };
 
   const handleOnClickCheckBox = (card) => () => {

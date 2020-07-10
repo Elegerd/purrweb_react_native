@@ -8,11 +8,11 @@ export const getCardIsLoading = (state) => state.cards.loading;
 
 const getColumnId = (_, column) => column.id;
 
-const getCardsSelector = (cards, column_id) =>
-  cards.filter((card) => card.columnId === column_id);
+const getCardsSelector = (cards, columnId) =>
+  cards.filter((card) => card.columnId === columnId);
 
-const getFilterCardsSelector = (cards, column_id) => {
-  const columnCards = cards.filter((card) => card.columnId === column_id);
+const getFilterCardsSelector = (cards, columnId) => {
+  const columnCards = cards.filter((card) => card.columnId === columnId);
   return {
     checkedCards: columnCards.filter((card) => card.checked),
     uncheckedCards: columnCards.filter((card) => !card.checked),
