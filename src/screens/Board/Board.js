@@ -13,8 +13,8 @@ const Board = ({navigation}) => {
   const isLoading = useSelector(getColumnIsLoading);
 
   useEffect(() => {
-    dispatch(fetchAllData());
-  }, [dispatch]);
+    if (!isLoading && !columns) dispatch(fetchAllData());
+  });
 
   const handleOnClick = (column) => () =>
     navigation.navigate('Column', {column});

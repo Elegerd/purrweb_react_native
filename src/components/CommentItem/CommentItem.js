@@ -22,13 +22,13 @@ const CommentItem = ({comment}) => (
           size={46}
           source={{
             uri:
-              'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+              'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
           }}
         />
       </View>
       <View style={styles.commentContainer}>
         <View style={styles.commentHeader}>
-          <Text style={styles.commentAuthor}>Maksim</Text>
+          <Text style={styles.commentAuthor}>Author</Text>
           <Text style={styles.commentDate}>
             {getDaysAgo(comment.created, new Date())} days ago
           </Text>
