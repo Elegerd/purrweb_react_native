@@ -33,6 +33,7 @@ const CustomInput = ({value = '', onChangeValue, ...inputProps}) => {
       inputContainerStyle={
         isFocused ? styles.activeInput : styles.inactiveInput
       }
+      errorStyle={styles.inputCommentError}
       onChange={handleOnChange}
       value={inputValue}
       ref={input}
@@ -51,6 +52,9 @@ const styles = StyleSheet.create({
   },
   inactiveInput: {
     borderBottomWidth: 0,
+  },
+  inputCommentError: {
+    display: 'none',
   },
 });
 

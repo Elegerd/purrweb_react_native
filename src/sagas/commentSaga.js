@@ -1,7 +1,12 @@
 import {call, put, takeEvery} from 'redux-saga/effects';
-import {fetchComment, addComment} from '../routines/commentRoutines';
+import {
+  fetchComment,
+  addComment,
+  removeComment,
+} from '../routines/commentRoutines';
 import {fetchCommentRequest} from '../utils/fetchData';
 import {createCommentRequest} from '../utils/createData';
+import {removeCommentRequest} from '../utils/removeData';
 
 export function* fetchCommentWatcherSaga() {
   yield takeEvery(fetchComment.TRIGGER, fetchCommentFlow);
@@ -9,6 +14,10 @@ export function* fetchCommentWatcherSaga() {
 
 export function* createCommentWatcherSaga() {
   yield takeEvery(addComment.TRIGGER, createCommentFlow);
+}
+
+export function* removeCommentWatcherSaga() {
+  yield takeEvery(removeComment.TRIGGER, removeCommentFlow);
 }
 
 function* fetchCommentFlow() {
@@ -32,5 +41,17 @@ function* createCommentFlow({payload}) {
     yield put(addComment.failure(error.message));
   } finally {
     yield put(addComment.fulfill());
+  }
+}
+
+function* removeCommentFlow({payload}) {
+  try {
+    yield put(removeComment.request());
+    yield call(removeCommentRequest, payload);
+    yield put(removeComment.success(payload));
+  } catch (error) {
+    yield put(removeComment.failure(error.message));
+  } finally {
+    yield put(removeComment.fulfill());
   }
 }

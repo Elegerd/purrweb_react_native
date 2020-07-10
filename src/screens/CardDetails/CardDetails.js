@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import {
   SafeAreaView,
@@ -8,9 +8,10 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import CustomInput from '../../components/CustomInput/CustomInput';
 import {
   backgroundColor,
+  borderColor,
+  dangerColor,
   fontColor,
   fontFamily,
   fontSize,
@@ -19,11 +20,17 @@ import {
   paddingHorizontal,
   primaryColor,
   secondColor,
+  shadowColor,
 } from '../../styles';
 import {useDispatch, useSelector} from 'react-redux';
 import {getCardComments} from '../../selectors/commentSelecotr';
-import {SwipeRow} from 'react-native-swipe-list-view';
+import {addComment, removeComment} from '../../routines/commentRoutines';
 import {changeCard} from '../../routines/cardRoutines';
+import {SwipeRow} from 'react-native-swipe-list-view';
+import CustomInput from '../../components/CustomInput/CustomInput';
+import CommentItem from '../../components/CommentItem/CommentItem';
+import {Input} from 'react-native-elements';
+import Icon from '../../components/CustomIcon/CustomIcon';
 
 const CardDetails = ({
   route: {
@@ -31,14 +38,57 @@ const CardDetails = ({
   },
 }) => {
   const dispatch = useDispatch();
+  const [commentBody, setCommentBode] = useState('');
   const comments = useSelector(getCardComments(card));
+
+  const handleOnClickRemoveCard = (commentId) => () => {
+    dispatch(removeComment(commentId));
+  };
 
   const handleOnChangeValue = (field) => (value) => {
     dispatch(changeCard({id: card.id, [field]: value}));
   };
 
+  const handleOnClickAddComment = (e) => {
+    if (commentBody.length) {
+      dispatch(
+        addComment({
+          comment: {body: commentBody, created: new Date()},
+          cardId: card.id,
+        }),
+      );
+      setCommentBode('');
+    }
+  };
+
+  const handleOnChangeCommentBody = (e) => {
+    const {text} = e.nativeEvent;
+    setCommentBode(text);
+  };
+
+  const renderCommentInput = () => {
+    return (
+      <Input
+        value={commentBody}
+        onChange={handleOnChangeCommentBody}
+        placeholder={'Add a comment...'}
+        containerStyle={styles.inputCommentContainer}
+        inputContainerStyle={styles.inputComment}
+        leftIconContainerStyle={styles.inputCommentLeftIcon}
+        errorStyle={styles.inputCommentError}
+        leftIcon={() => (
+          <Icon
+            name={'chatbox-outline'}
+            color={primaryColor}
+            onPress={handleOnClickAddComment}
+          />
+        )}
+      />
+    );
+  };
+
   return (
-    <ScrollView style={styles.scrollView}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.subHeader}>
         <CustomInput
           placeholder={'Title'}
@@ -48,19 +98,21 @@ const CardDetails = ({
           value={card.title}
         />
       </View>
-      <SafeAreaView style={styles.container}>
-        <View style={styles.descriptionContainer}>
-          <Text style={styles.inputDescriptionField}>DESCRIPTION</Text>
-          <CustomInput
-            placeholder={'Description'}
-            containerStyle={styles.inputContainerDescription}
-            onChangeValue={handleOnChangeValue('description')}
-            inputStyle={styles.inputDescription}
-            value={card.description}
-          />
+      <ScrollView>
+        <View style={styles.containerDescription}>
+          <View style={styles.descriptionContainer}>
+            <Text style={styles.inputDescriptionField}>DESCRIPTION</Text>
+            <CustomInput
+              placeholder={'Description'}
+              containerStyle={styles.inputContainerDescription}
+              onChangeValue={handleOnChangeValue('description')}
+              inputStyle={styles.inputDescription}
+              value={card.description}
+            />
+          </View>
         </View>
         <View style={styles.commentContainer}>
-          <Text style={styles.inputDescriptionField}>COMMENTS</Text>
+          <Text style={styles.inputCommentField}>COMMENTS</Text>
           {comments.map((comment) => (
             <SwipeRow
               key={comment.id}
@@ -68,16 +120,17 @@ const CardDetails = ({
               rightOpenValue={-70}>
               <View style={styles.standaloneRowBack}>
                 <Text style={styles.standaloneRowBackText} />
-                <TouchableOpacity onPress={() => {}}>
+                <TouchableOpacity onPress={handleOnClickRemoveCard(comment.id)}>
                   <Text style={styles.standaloneRowBackText}>Delete</Text>
                 </TouchableOpacity>
               </View>
-              <Text>{comment.body}</Text>
+              <CommentItem comment={comment} />
             </SwipeRow>
           ))}
         </View>
-      </SafeAreaView>
-    </ScrollView>
+      </ScrollView>
+      {renderCommentInput()}
+    </SafeAreaView>
   );
 };
 
@@ -93,19 +146,35 @@ CardDetails.propTypes = {
 };
 
 const styles = StyleSheet.create({
-  scrollView: {
+  container: {
     flex: 1,
     backgroundColor: backgroundColor,
   },
-  container: {
+  containerDescription: {
     flex: 1,
     alignItems: 'stretch',
     justifyContent: 'center',
-    paddingHorizontal: paddingHorizontal,
     paddingVertical: 5,
   },
   subHeader: {
     backgroundColor: primaryColor,
+  },
+  inputComment: {
+    borderTopWidth: 1,
+    borderBottomWidth: 0,
+    borderColor: borderColor,
+    shadowColor: shadowColor,
+    shadowOpacity: 0.1,
+  },
+  inputCommentContainer: {
+    paddingHorizontal: 0,
+    marginHorizontal: 0,
+  },
+  inputCommentLeftIcon: {
+    paddingHorizontal: 12,
+  },
+  inputCommentError: {
+    display: 'none',
   },
   inputTitle: {
     fontFamily: fontFamily,
@@ -114,6 +183,7 @@ const styles = StyleSheet.create({
   },
   inputContainerTitle: {
     paddingHorizontal: paddingHorizontal,
+    paddingBottom: 10,
   },
   inputDescriptionField: {
     color: secondColor,
@@ -127,11 +197,35 @@ const styles = StyleSheet.create({
   },
   inputContainerDescription: {
     paddingHorizontal: 0,
+    paddingBottom: 10,
+  },
+  inputCommentField: {
+    color: secondColor,
+    fontSize: otherFontSize,
+    fontFamily: fontFamily,
+    paddingHorizontal: paddingHorizontal,
+    paddingBottom: 10,
+    borderBottomWidth: 1,
+    borderColor: borderColor,
   },
   descriptionContainer: {
     paddingVertical: 20,
+    paddingHorizontal: paddingHorizontal,
   },
   commentContainer: {},
+  standaloneRowBack: {
+    backgroundColor: dangerColor,
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  standaloneRowBackText: {
+    color: backgroundColor,
+    fontSize: otherFontSize,
+    textAlign: 'center',
+    minWidth: 75,
+  },
 });
 
 export default CardDetails;

@@ -1,5 +1,9 @@
 import {fetchAllData} from '../routines/dataRoutines';
-import {fetchComment} from '../routines/commentRoutines';
+import {
+  addComment,
+  fetchComment,
+  removeComment,
+} from '../routines/commentRoutines';
 
 const initialState = {
   data: null,
@@ -9,6 +13,50 @@ const initialState = {
 
 export function commentReducer(state = initialState, action) {
   switch (action.type) {
+    case addComment.TRIGGER:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case addComment.SUCCESS:
+      return {
+        ...state,
+        data: [...state.data, action.payload],
+        error: null,
+      };
+    case addComment.FAILURE:
+      return {
+        ...state,
+        error: action.payload,
+      };
+    case addComment.FULFILL:
+      return {
+        ...state,
+        loading: false,
+      };
+    case removeComment.TRIGGER:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case removeComment.SUCCESS:
+      return {
+        ...state,
+        data: state.data.filter((comment) => comment.id !== action.payload),
+        error: null,
+      };
+    case removeComment.FAILURE:
+      return {
+        ...state,
+        error: action.payload,
+      };
+    case removeComment.FULFILL:
+      return {
+        ...state,
+        loading: false,
+      };
     case fetchAllData.TRIGGER:
       return {
         ...state,

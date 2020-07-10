@@ -17,3 +17,12 @@ export function removeCardRequest(cardId) {
       .catch((error) => reject(error));
   });
 }
+
+export function removeCommentRequest(commentId) {
+  return new Promise((resolve, reject) => {
+    request
+      .delete(`/comments/${commentId}`)
+      .then(({data}) => resolve(data))
+      .catch((error) => reject(error));
+  });
+}

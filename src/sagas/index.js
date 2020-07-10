@@ -12,7 +12,11 @@ import {
   removeCardWatcherSaga,
   changeCardWatcherSaga,
 } from './cardSaga';
-import {fetchCommentWatcherSaga, createCommentWatcherSaga} from './commentSaga';
+import {
+  fetchCommentWatcherSaga,
+  createCommentWatcherSaga,
+  removeCommentWatcherSaga,
+} from './commentSaga';
 
 export default function* rootSaga() {
   yield all([
@@ -27,6 +31,7 @@ export default function* rootSaga() {
     createCommentWatcherSaga(),
     removeColumnWatcherSaga(),
     removeCardWatcherSaga(),
+    removeCommentWatcherSaga(),
     changeCardWatcherSaga(),
   ]);
 }

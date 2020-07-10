@@ -18,10 +18,10 @@ export function createCardRequest({columnId, card}) {
   });
 }
 
-export function createCommentRequest(comment) {
+export function createCommentRequest({cardId, comment}) {
   return new Promise((resolve, reject) => {
     request
-      .post('/comments', comment)
+      .post(`/cards/${cardId}/comments`, comment)
       .then(({data}) => resolve(data))
       .catch((error) => reject(error));
   });
