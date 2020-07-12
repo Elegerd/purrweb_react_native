@@ -5,6 +5,7 @@ import {
   fetchColumnWatcherSaga,
   createColumnWatcherSaga,
   removeColumnWatcherSaga,
+  changeColumnWatcherSaga,
 } from './columnSaga';
 import {
   fetchCardWatcherSaga,
@@ -33,5 +34,6 @@ export default function* rootSaga() {
     removeCardWatcherSaga(),
     removeCommentWatcherSaga(),
     changeCardWatcherSaga(),
+    changeColumnWatcherSaga(),
   ]);
 }

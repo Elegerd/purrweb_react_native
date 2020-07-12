@@ -2,9 +2,9 @@ import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
-import {getAuth, getIsAuth} from './selectors/authSelector';
+import {getIsAuth} from './selectors/authSelector';
 import {logOut} from './routines/authRoutines';
-import {removeColumn} from './routines/columnRoutines';
+import {changeColumn, removeColumn} from './routines/columnRoutines';
 import Icon from './components/CustomIcon/CustomIcon';
 import SignIn from './screens/SignIn/SignIn';
 import SignUp from './screens/SignUp/SignUp';
@@ -22,6 +22,7 @@ import CustomHeader from './components/CustomHeader/CustomHeader';
 import Column from './screens/Column/Column';
 import CustomMenuIcon from './components/CustomMenuItem/CustomMenuItem';
 import CardDetails from './screens/CardDetails/CardDetails';
+import CustomInput from './components/CustomInput/CustomInput';
 
 const Stack = createStackNavigator();
 
@@ -33,6 +34,10 @@ const App = () => {
   const handleOnClickRemoveColumn = (navigation, columnId) => () => {
     dispatch(removeColumn(columnId));
     navigation.goBack();
+  };
+
+  const handleOnChangeColumn = (columnId) => (value) => {
+    dispatch(changeColumn({id: columnId, title: value}));
   };
 
   return (
@@ -56,9 +61,7 @@ const App = () => {
                       color={secondColor}
                       onPress={() => navigation.goBack()}
                     />
-                    <Text style={{color: fontColor, fontSize: fontSize}}>
-                      Sign Up
-                    </Text>
+                    <Text style={styles.headerText}>Sign Up</Text>
                   </CustomHeader>
                 ),
               }}
@@ -77,9 +80,7 @@ const App = () => {
                       color={secondColor}
                       onPress={handleOnClickLogOut}
                     />
-                    <Text style={{color: fontColor, fontSize: fontSize}}>
-                      My Desk
-                    </Text>
+                    <Text style={styles.headerText}>My Desk</Text>
                     <Icon
                       name={'add'}
                       color={secondColor}
@@ -100,9 +101,7 @@ const App = () => {
                       color={secondColor}
                       onPress={() => navigation.goBack()}
                     />
-                    <Text style={{color: fontColor, fontSize: fontSize}}>
-                      Create A New Column
-                    </Text>
+                    <Text style={styles.headerText}>Create A New Column</Text>
                   </CustomHeader>
                 ),
               }}
@@ -123,7 +122,13 @@ const App = () => {
                       color={secondColor}
                       onPress={() => navigation.goBack()}
                     />
-                    <Text style={styles.headerColumnText}>{options.title}</Text>
+                    <CustomInput
+                      multiline={false}
+                      placeholder={'Title'}
+                      inputStyle={styles.headerText}
+                      value={options.title}
+                      onChangeValue={handleOnChangeColumn(options.columnId)}
+                    />
                     <CustomMenuIcon
                       iconName={'settings-outline'}
                       menuContainerStyle={styles.headerColumnIcon}
@@ -172,7 +177,8 @@ const styles = StyleSheet.create({
   headerColumn: {
     backgroundColor: backgroundColor,
   },
-  headerColumnText: {
+  headerText: {
+    textAlign: 'center',
     color: fontColor,
     fontSize: fontSize,
   },

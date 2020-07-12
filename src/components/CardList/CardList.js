@@ -49,7 +49,7 @@ const CardList = ({
   };
 
   const handleOnClickCard = (card) => () => {
-    navigation.navigate('Card Details', {card});
+    navigation.navigate('Card Details', {cardId: card.id});
   };
 
   const handleOnClickCheckBox = (card) => () => {

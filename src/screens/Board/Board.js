@@ -6,7 +6,7 @@ import {fetchAllData} from '../../routines/dataRoutines';
 import {getColumnIsLoading, getColumns} from '../../selectors/columnSelector';
 import ColumnItem from '../../components/ColumnItem/ColumnItem';
 import Splash from '../Splash/Splash';
-import {getAuth, getIsAuth} from '../../selectors/authSelector';
+import {getIsAuth} from '../../selectors/authSelector';
 
 const Board = ({navigation}) => {
   const dispatch = useDispatch();
@@ -15,11 +15,14 @@ const Board = ({navigation}) => {
   const isLoading = useSelector(getColumnIsLoading);
 
   useEffect(() => {
-    if (!isLoading && !columns && isAuth) dispatch(fetchAllData());
+    if (!isLoading && !columns && isAuth) {
+      dispatch(fetchAllData());
+    }
   });
 
-  const handleOnClick = (column) => () =>
-    navigation.navigate('Column', {column});
+  const handleOnClick = (column) => () => {
+    navigation.navigate('Column', {columnId: column.id});
+  };
 
   return isLoading || !columns ? (
     <Splash />
@@ -30,7 +33,7 @@ const Board = ({navigation}) => {
           <ColumnItem
             key={column.id}
             column={column}
-            handleOnClick={handleOnClick}
+            handleOnClick={handleOnClick(column)}
           />
         ))}
       </SafeAreaView>

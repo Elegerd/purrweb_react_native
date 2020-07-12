@@ -1,4 +1,9 @@
-import {fetchColumn, addColumn, removeColumn} from '../routines/columnRoutines';
+import {
+  fetchColumn,
+  addColumn,
+  removeColumn,
+  changeColumn,
+} from '../routines/columnRoutines';
 import {fetchAllData} from '../routines/dataRoutines';
 import {logOut} from '../routines/authRoutines';
 
@@ -28,6 +33,33 @@ export function columnReducer(state = initialState, action) {
         error: action.payload,
       };
     case addColumn.FULFILL:
+      return {
+        ...state,
+        loading: false,
+      };
+    case changeColumn.TRIGGER:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case changeColumn.SUCCESS:
+      return {
+        ...state,
+        data: state.data.map((card) => {
+          if (card.id === action.payload.id) {
+            return action.payload;
+          }
+          return card;
+        }),
+        error: null,
+      };
+    case changeColumn.FAILURE:
+      return {
+        ...state,
+        error: action.payload,
+      };
+    case changeColumn.FULFILL:
       return {
         ...state,
         loading: false,

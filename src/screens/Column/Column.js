@@ -5,6 +5,7 @@ import {useSelector} from 'react-redux';
 import {getFilterColumnCards} from '../../selectors/cardSelector';
 import CardList from '../../components/CardList/CardList';
 import PropTypes from 'prop-types';
+import {getColumnById} from '../../selectors/columnSelector';
 
 const Tab = createMaterialTopTabNavigator();
 export const ColumnContext = React.createContext();
@@ -12,16 +13,17 @@ export const ColumnContext = React.createContext();
 const Column = ({
   navigation,
   route: {
-    params: {column},
+    params: {columnId},
   },
 }) => {
+  const column = useSelector(getColumnById({id: columnId}));
   const {checkedCards, uncheckedCards} = useSelector(
-    getFilterColumnCards(column),
+    getFilterColumnCards({id: columnId}),
   );
 
   useEffect(() => {
     navigation.setOptions({title: column.title, columnId: column.id});
-  }, [column.id, column.title, navigation]);
+  }, [column, navigation]);
 
   return (
     <ColumnContext.Provider value={{checkedCards, uncheckedCards, column}}>

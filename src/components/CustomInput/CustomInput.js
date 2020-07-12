@@ -3,17 +3,24 @@ import PropTypes from 'prop-types';
 import {StyleSheet} from 'react-native';
 import {Input} from 'react-native-elements';
 
-const CustomInput = ({value = '', onChangeValue, ...inputProps}) => {
+const CustomInput = ({value, onChangeValue, ...inputProps}) => {
   const mounted = useRef();
-  const input = useRef(null);
-  const [inputValue, setInputValue] = useState(value);
+  const [inputValue, setInputValue] = useState(null);
   const [isFocused, setIsFocused] = useState(false);
+
+  useEffect(() => {
+    setInputValue(value);
+  }, [value]);
 
   useEffect(() => {
     if (!mounted.current) {
       mounted.current = true;
     } else {
-      if (!isFocused) {
+      if (
+        !isFocused &&
+        typeof inputValue !== 'undefined' &&
+        value !== inputValue
+      ) {
         onChangeValue(inputValue);
       }
     }
@@ -27,7 +34,6 @@ const CustomInput = ({value = '', onChangeValue, ...inputProps}) => {
   return (
     <Input
       {...inputProps}
-      multiline={true}
       onFocus={() => setIsFocused(true)}
       onBlur={() => setIsFocused(false)}
       inputContainerStyle={
@@ -36,7 +42,6 @@ const CustomInput = ({value = '', onChangeValue, ...inputProps}) => {
       errorStyle={styles.inputCommentError}
       onChange={handleOnChange}
       value={inputValue}
-      ref={input}
     />
   );
 };

@@ -31,15 +31,17 @@ import CustomInput from '../../components/CustomInput/CustomInput';
 import CommentItem from '../../components/CommentItem/CommentItem';
 import {Input} from 'react-native-elements';
 import Icon from '../../components/CustomIcon/CustomIcon';
+import {getCardById} from '../../selectors/cardSelector';
 
 const CardDetails = ({
   route: {
-    params: {card},
+    params: {cardId},
   },
 }) => {
   const dispatch = useDispatch();
   const [commentBody, setCommentBode] = useState('');
-  const comments = useSelector(getCardComments(card));
+  const card = useSelector(getCardById({id: cardId}));
+  const comments = useSelector(getCardComments({id: cardId}));
 
   const handleOnClickRemoveCard = (commentId) => () => {
     dispatch(removeComment(commentId));
@@ -91,6 +93,7 @@ const CardDetails = ({
     <SafeAreaView style={styles.container}>
       <View style={styles.subHeader}>
         <CustomInput
+          multiline={true}
           placeholder={'Title'}
           inputStyle={styles.inputTitle}
           containerStyle={styles.inputContainerTitle}
@@ -103,6 +106,7 @@ const CardDetails = ({
           <View style={styles.descriptionContainer}>
             <Text style={styles.inputDescriptionField}>DESCRIPTION</Text>
             <CustomInput
+              multiline={true}
               placeholder={'Description'}
               containerStyle={styles.inputContainerDescription}
               onChangeValue={handleOnChangeValue('description')}

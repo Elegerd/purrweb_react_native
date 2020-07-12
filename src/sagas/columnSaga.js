@@ -1,8 +1,14 @@
 import {call, put, takeEvery} from 'redux-saga/effects';
-import {fetchColumn, addColumn, removeColumn} from '../routines/columnRoutines';
+import {
+  fetchColumn,
+  addColumn,
+  removeColumn,
+  changeColumn,
+} from '../routines/columnRoutines';
 import {fetchColumnRequest} from '../utils/fetchData';
 import {createColumnRequest} from '../utils/createData';
 import {removeColumnRequest} from '../utils/removeData';
+import {changeColumnRequest} from '../utils/changeData';
 
 export function* fetchColumnWatcherSaga() {
   yield takeEvery(fetchColumn.TRIGGER, fetchColumnFlow);
@@ -10,6 +16,10 @@ export function* fetchColumnWatcherSaga() {
 
 export function* createColumnWatcherSaga() {
   yield takeEvery(addColumn.TRIGGER, createColumnFlow);
+}
+
+export function* changeColumnWatcherSaga() {
+  yield takeEvery(changeColumn.TRIGGER, changeColumnFlow);
 }
 
 export function* removeColumnWatcherSaga() {
@@ -37,6 +47,18 @@ function* createColumnFlow({payload}) {
     yield put(addColumn.failure(error.message));
   } finally {
     yield put(addColumn.fulfill());
+  }
+}
+
+function* changeColumnFlow({payload}) {
+  try {
+    yield put(changeColumn.request());
+    const response = yield call(changeColumnRequest, payload);
+    yield put(changeColumn.success(response));
+  } catch (error) {
+    yield put(changeColumn.failure(error.message));
+  } finally {
+    yield put(changeColumn.fulfill());
   }
 }
 

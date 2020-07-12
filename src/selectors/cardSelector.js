@@ -1,4 +1,5 @@
 import {createSelector} from 'reselect';
+import {getColumns} from './columnSelector';
 
 export const getCards = (state) => state.cards.data;
 
@@ -32,3 +33,16 @@ export const getColumnCards = (column) => (state) =>
 
 export const getFilterColumnCards = (column) => (state) =>
   filterCardSelector(state, column);
+
+const getCardId = (_, card) => card.id;
+
+const getCardByIdSelector = (cards, cardId) =>
+  cards.find((card) => card.id === cardId);
+
+const cardByIdSelector = createSelector(
+  getCards,
+  getCardId,
+  getCardByIdSelector,
+);
+
+export const getCardById = (card) => (state) => cardByIdSelector(state, card);
