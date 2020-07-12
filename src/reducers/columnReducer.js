@@ -1,5 +1,6 @@
 import {fetchColumn, addColumn, removeColumn} from '../routines/columnRoutines';
 import {fetchAllData} from '../routines/dataRoutines';
+import {logOut} from '../routines/authRoutines';
 
 const initialState = {
   data: null,
@@ -90,6 +91,13 @@ export function columnReducer(state = initialState, action) {
       return {
         ...state,
         loading: false,
+      };
+    case logOut.TRIGGER:
+      return {
+        ...state,
+        data: null,
+        loading: false,
+        error: null,
       };
     default:
       return state;

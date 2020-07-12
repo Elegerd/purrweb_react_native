@@ -5,6 +5,7 @@ import {
   fetchCard,
   removeCard,
 } from '../routines/cardRoutines';
+import {logOut} from '../routines/authRoutines';
 
 const initialState = {
   data: null,
@@ -122,6 +123,13 @@ export function cardReducer(state = initialState, action) {
       return {
         ...state,
         loading: false,
+      };
+    case logOut.TRIGGER:
+      return {
+        ...state,
+        data: null,
+        loading: false,
+        error: null,
       };
     default:
       return state;

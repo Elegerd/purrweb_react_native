@@ -4,16 +4,16 @@ import {backgroundColor, paddingHorizontal} from '../../styles';
 import {addColumn} from '../../routines/columnRoutines';
 import {useDispatch, useSelector} from 'react-redux';
 import NewColumnForm from '../../components/NewColumnForm/NewColumnForm';
-import {getColumns} from '../../selectors/columnSelector';
+import {getColumnIsLoading} from '../../selectors/columnSelector';
 import Splash from '../Splash/Splash';
 
 const NewColumn = () => {
   const dispatch = useDispatch();
-  const {loading} = useSelector(getColumns);
+  const isLoading = useSelector(getColumnIsLoading);
 
   const handleSubmit = (values) => dispatch(addColumn(values));
 
-  return loading ? (
+  return isLoading ? (
     <Splash />
   ) : (
     <ScrollView style={styles.scrollView}>

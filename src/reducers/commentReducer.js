@@ -4,6 +4,7 @@ import {
   fetchComment,
   removeComment,
 } from '../routines/commentRoutines';
+import {logOut} from '../routines/authRoutines';
 
 const initialState = {
   data: null,
@@ -94,6 +95,13 @@ export function commentReducer(state = initialState, action) {
       return {
         ...state,
         loading: false,
+      };
+    case logOut.TRIGGER:
+      return {
+        ...state,
+        data: null,
+        loading: false,
+        error: null,
       };
     default:
       return state;

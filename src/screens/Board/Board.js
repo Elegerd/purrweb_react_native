@@ -6,14 +6,16 @@ import {fetchAllData} from '../../routines/dataRoutines';
 import {getColumnIsLoading, getColumns} from '../../selectors/columnSelector';
 import ColumnItem from '../../components/ColumnItem/ColumnItem';
 import Splash from '../Splash/Splash';
+import {getAuth, getIsAuth} from '../../selectors/authSelector';
 
 const Board = ({navigation}) => {
   const dispatch = useDispatch();
   const columns = useSelector(getColumns);
+  const isAuth = useSelector(getIsAuth);
   const isLoading = useSelector(getColumnIsLoading);
 
   useEffect(() => {
-    if (!isLoading && !columns) dispatch(fetchAllData());
+    if (!isLoading && !columns && isAuth) dispatch(fetchAllData());
   });
 
   const handleOnClick = (column) => () =>

@@ -2,7 +2,7 @@ import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
-import {getAuth} from './selectors/authSelector';
+import {getAuth, getIsAuth} from './selectors/authSelector';
 import {logOut} from './routines/authRoutines';
 import {removeColumn} from './routines/columnRoutines';
 import Icon from './components/CustomIcon/CustomIcon';
@@ -27,7 +27,7 @@ const Stack = createStackNavigator();
 
 const App = () => {
   const dispatch = useDispatch();
-  const data = useSelector(getAuth);
+  const isAuth = useSelector(getIsAuth);
 
   const handleOnClickLogOut = () => dispatch(logOut());
   const handleOnClickRemoveColumn = (navigation, columnId) => () => {
@@ -38,7 +38,7 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        {data == null ? (
+        {!isAuth ? (
           <>
             <Stack.Screen
               name="Sign In"

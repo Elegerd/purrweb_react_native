@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {SafeAreaView, StyleSheet, Text, Alert} from 'react-native';
 import SignInForm from '../../components/SignInForm/SignInForm';
 import {useDispatch, useSelector} from 'react-redux';
-import {getAuthError} from '../../selectors/authSelector';
+import {getAuthError, getAuthIsLoading} from '../../selectors/authSelector';
 import {clearError, signIn} from '../../routines/authRoutines';
 import CustomButton from '../../components/CustomButton/CustomButton';
 import PropTypes from 'prop-types';
@@ -13,9 +13,11 @@ import {
   headerFontSize,
   paddingHorizontal,
 } from '../../styles';
+import Splash from '../Splash/Splash';
 
 const SignIn = ({navigation}) => {
   const dispatch = useDispatch();
+  const isLoading = useSelector(getAuthIsLoading);
   const error = useSelector(getAuthError);
 
   useEffect(() => {
@@ -37,7 +39,9 @@ const SignIn = ({navigation}) => {
     navigation.navigate('Sign Up');
   };
 
-  return (
+  return isLoading ? (
+    <Splash />
+  ) : (
     <SafeAreaView style={styles.container}>
       <Text style={styles.text}>Sign In</Text>
       <SignInForm onSubmit={handleSubmit} />
