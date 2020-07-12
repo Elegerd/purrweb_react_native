@@ -4,6 +4,8 @@ import {
   changeCard,
   fetchCard,
   removeCard,
+  addCardComment,
+  removeCardComment,
 } from '../routines/cardRoutines';
 import {logOut} from '../routines/authRoutines';
 
@@ -130,6 +132,28 @@ export function cardReducer(state = initialState, action) {
         data: null,
         loading: false,
         error: null,
+      };
+    case addCardComment.SUCCESS:
+      return {
+        ...state,
+        data: state.data.map((card) => {
+          if (card.id === action.payload.cardId) {
+            card.commentsIds.push(action.payload.commentId);
+          }
+          return card;
+        }),
+      };
+    case removeCardComment.SUCCESS:
+      return {
+        ...state,
+        data: state.data.map((card) => {
+          if (card.id === action.payload.cardId) {
+            card.commentsIds = card.commentsIds.filter(
+              (commentId) => commentId !== action.payload.commentId,
+            );
+          }
+          return card;
+        }),
       };
     default:
       return state;

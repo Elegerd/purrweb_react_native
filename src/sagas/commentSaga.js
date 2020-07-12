@@ -7,6 +7,7 @@ import {
 import {fetchCommentRequest} from '../utils/fetchData';
 import {createCommentRequest} from '../utils/createData';
 import {removeCommentRequest} from '../utils/removeData';
+import {addCardComment, removeCardComment} from '../routines/cardRoutines';
 
 export function* fetchCommentWatcherSaga() {
   yield takeEvery(fetchComment.TRIGGER, fetchCommentFlow);
@@ -37,6 +38,9 @@ function* createCommentFlow({payload}) {
     yield put(addComment.request());
     const response = yield call(createCommentRequest, payload);
     yield put(addComment.success(response));
+    yield put(
+      addCardComment.success({cardId: payload.cardId, commentId: response.id}),
+    );
   } catch (error) {
     yield put(addComment.failure(error.message));
   } finally {
@@ -47,8 +51,18 @@ function* createCommentFlow({payload}) {
 function* removeCommentFlow({payload}) {
   try {
     yield put(removeComment.request());
-    yield call(removeCommentRequest, payload);
-    yield put(removeComment.success(payload));
+    yield call(removeCommentRequest, payload.commentId);
+    yield put(removeComment.success(payload.commentId));
+    console.log({
+      cardId: payload.cardId,
+      commentId: payload.commentId,
+    });
+    yield put(
+      removeCardComment.success({
+        cardId: payload.cardId,
+        commentId: payload.commentId,
+      }),
+    );
   } catch (error) {
     yield put(removeComment.failure(error.message));
   } finally {

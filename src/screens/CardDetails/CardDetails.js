@@ -44,7 +44,7 @@ const CardDetails = ({
   const comments = useSelector(getCardComments({id: cardId}));
 
   const handleOnClickRemoveCard = (commentId) => () => {
-    dispatch(removeComment(commentId));
+    dispatch(removeComment({cardId: cardId, commentId: commentId}));
   };
 
   const handleOnChangeValue = (field) => (value) => {
