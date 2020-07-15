@@ -2,9 +2,9 @@ import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
-import {getIsAuth} from './selectors/authSelector';
-import {logOut} from './routines/authRoutines';
-import {changeColumn, removeColumn} from './routines/columnRoutines';
+import {getIsAuth} from './store/selectors/authSelector';
+import {logOut} from './store/routines/authRoutines';
+import {changeColumn, removeColumn} from './store/routines/columnRoutines';
 import Icon from './components/CustomIcon/CustomIcon';
 import SignIn from './screens/SignIn/SignIn';
 import SignUp from './screens/SignUp/SignUp';
@@ -30,9 +30,9 @@ const App = () => {
   const dispatch = useDispatch();
   const isAuth = useSelector(getIsAuth);
 
-  const handleOnClickLogOut = () => dispatch(logOut());
+  const handleOnClickLogOut = () => dispatch(logOut.success());
   const handleOnClickRemoveColumn = (navigation, columnId) => () => {
-    dispatch(removeColumn(columnId));
+    dispatch(removeColumn({columnId}));
     navigation.goBack();
   };
 

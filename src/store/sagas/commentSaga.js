@@ -1,13 +1,20 @@
-import {call, put, takeEvery} from 'redux-saga/effects';
+import {call, put, takeEvery, select} from 'redux-saga/effects';
 import {
   fetchComment,
   addComment,
   removeComment,
 } from '../routines/commentRoutines';
-import {fetchCommentRequest} from '../utils/fetchData';
-import {createCommentRequest} from '../utils/createData';
-import {removeCommentRequest} from '../utils/removeData';
+import {fetchCommentRequest} from '../../utils/fetchData';
+import {createCommentRequest} from '../../utils/createData';
+import {removeCommentRequest} from '../../utils/removeData';
 import {addCardComment, removeCardComment} from '../routines/cardRoutines';
+import {getComments} from '../selectors/commentSelecotr';
+import {getCards} from '../selectors/cardSelector';
+import {
+  addCommentFromCard,
+  removeCommentFromCard,
+  removeObjectById,
+} from '../../utils/dataHandler';
 
 export function* fetchCommentWatcherSaga() {
   yield takeEvery(fetchComment.TRIGGER, fetchCommentFlow);
@@ -36,10 +43,14 @@ function* fetchCommentFlow() {
 function* createCommentFlow({payload}) {
   try {
     yield put(addComment.request());
-    const response = yield call(createCommentRequest, payload);
-    yield put(addComment.success(response));
+    const comments = yield select(getComments);
+    const cards = yield select(getCards);
+    const newComment = yield call(createCommentRequest, payload);
+    yield put(addComment.success([...comments, newComment]));
     yield put(
-      addCardComment.success({cardId: payload.cardId, commentId: response.id}),
+      addCardComment.success(
+        addCommentFromCard(payload.cardId, newComment.id, cards),
+      ),
     );
   } catch (error) {
     yield put(addComment.failure(error.message));
@@ -51,17 +62,16 @@ function* createCommentFlow({payload}) {
 function* removeCommentFlow({payload}) {
   try {
     yield put(removeComment.request());
+    const comments = yield select(getComments);
+    const cards = yield select(getCards);
     yield call(removeCommentRequest, payload.commentId);
-    yield put(removeComment.success(payload.commentId));
-    console.log({
-      cardId: payload.cardId,
-      commentId: payload.commentId,
-    });
     yield put(
-      removeCardComment.success({
-        cardId: payload.cardId,
-        commentId: payload.commentId,
-      }),
+      removeComment.success(removeObjectById(payload.commentId, comments)),
+    );
+    yield put(
+      removeCardComment.success(
+        removeCommentFromCard(payload.cardId, payload.commentId, cards),
+      ),
     );
   } catch (error) {
     yield put(removeComment.failure(error.message));

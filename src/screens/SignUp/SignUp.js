@@ -1,10 +1,10 @@
 import React from 'react';
 import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
-import SignUpForm from '../../components/SignUpForm/SignUpForm';
+import SignUpForm from './SignUpForm/SignUpForm';
 import {useDispatch, useSelector} from 'react-redux';
-import {signUp} from '../../routines/authRoutines';
+import {signUp} from '../../store/routines/authRoutines';
 import {backgroundColor, paddingHorizontal} from '../../styles';
-import {getAuthIsLoading} from '../../selectors/authSelector';
+import {getAuthIsLoading} from '../../store/selectors/authSelector';
 import Splash from '../Splash/Splash';
 
 const SignUp = () => {

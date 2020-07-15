@@ -10,8 +10,8 @@ import {
   fontSize,
   inactiveColor,
   otherFontSize,
-} from '../../styles';
-import getDaysAgo from '../../utils/getDaysAgo';
+} from '../../../styles';
+import getDaysAgo from '../../../utils/getDaysAgo';
 
 const CommentItem = ({comment}) => (
   <View style={styles.wrapper}>

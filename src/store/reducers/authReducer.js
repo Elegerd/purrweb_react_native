@@ -1,0 +1,51 @@
+import {signIn, signUp, logOut, clearError} from '../routines/authRoutines';
+import {createReducer} from '../createReducer';
+import {
+  handleFailure,
+  handleFulfill,
+  handleSuccess,
+  handleTrigger,
+} from '../baseHandle';
+
+const initialState = {
+  data: null,
+  loading: false,
+  error: null,
+};
+
+const handleSignIn = {
+  ...handleTrigger(signIn),
+  ...handleSuccess(signIn),
+  ...handleFailure(signIn),
+  ...handleFulfill(signIn),
+};
+
+const handleSignUp = {
+  ...handleTrigger(signUp),
+  ...handleSuccess(signUp),
+  ...handleFailure(signUp),
+  ...handleFulfill(signUp),
+};
+
+const handleLogOut = {
+  [logOut.SUCCESS]: (state) => ({
+    ...state,
+    data: null,
+    loading: false,
+    error: null,
+  }),
+};
+
+const handleClearError = {
+  [clearError.SUCCESS]: (state) => ({
+    ...state,
+    error: null,
+  }),
+};
+
+export const authReducer = createReducer(initialState)({
+  ...handleSignIn,
+  ...handleSignUp,
+  ...handleLogOut,
+  ...handleClearError,
+});

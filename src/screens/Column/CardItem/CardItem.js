@@ -11,8 +11,8 @@ import {
   otherFontSize,
   paddingHorizontal,
   safeColor,
-} from '../../styles';
-import Icon from '../CustomIcon/CustomIcon';
+} from '../../../styles';
+import Icon from '../../../components/CustomIcon/CustomIcon';
 
 const CardItem = ({card, handleOnClickCard, handleOnClickCheckBox}) => (
   <TouchableOpacity

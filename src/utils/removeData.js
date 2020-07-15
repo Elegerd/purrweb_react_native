@@ -1,28 +1,13 @@
 import request from '../request';
 
 export function removeColumnRequest(columnId) {
-  return new Promise((resolve, reject) => {
-    request
-      .delete(`/columns/${columnId}`)
-      .then(({data}) => resolve(data))
-      .catch((error) => reject(error));
-  });
+  return request.delete(`/columns/${columnId}`).then(({data}) => data);
 }
 
 export function removeCardRequest(cardId) {
-  return new Promise((resolve, reject) => {
-    request
-      .delete(`/cards/${cardId}`)
-      .then(({data}) => resolve(data))
-      .catch((error) => reject(error));
-  });
+  return request.delete(`/cards/${cardId}`).then(({data}) => data);
 }
 
 export function removeCommentRequest(commentId) {
-  return new Promise((resolve, reject) => {
-    request
-      .delete(`/comments/${commentId}`)
-      .then(({data}) => resolve(data))
-      .catch((error) => reject(error));
-  });
+  return request.delete(`/comments/${commentId}`).then(({data}) => data);
 }

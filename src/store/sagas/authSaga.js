@@ -1,6 +1,6 @@
 import {call, put, takeEvery} from 'redux-saga/effects';
 import {signIn, signUp} from '../routines/authRoutines';
-import {signInRequest, signUpRequest} from '../utils/auth';
+import {signInRequest, signUpRequest} from '../../utils/auth';
 
 export function* signInWatcherSaga() {
   yield takeEvery(signIn.TRIGGER, signInFlow);

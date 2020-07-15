@@ -1,9 +1,12 @@
 import React, {useEffect} from 'react';
 import {SafeAreaView, StyleSheet, Text, Alert} from 'react-native';
-import SignInForm from '../../components/SignInForm/SignInForm';
+import SignInForm from './SignInForm/SignInForm';
 import {useDispatch, useSelector} from 'react-redux';
-import {getAuthError, getAuthIsLoading} from '../../selectors/authSelector';
-import {clearError, signIn} from '../../routines/authRoutines';
+import {
+  getAuthError,
+  getAuthIsLoading,
+} from '../../store/selectors/authSelector';
+import {clearError, signIn} from '../../store/routines/authRoutines';
 import CustomButton from '../../components/CustomButton/CustomButton';
 import PropTypes from 'prop-types';
 import {
@@ -25,7 +28,7 @@ const SignIn = ({navigation}) => {
       Alert.alert(
         'Error message',
         error,
-        [{text: 'OK', onPress: () => dispatch(clearError())}],
+        [{text: 'OK', onPress: () => dispatch(clearError.success())}],
         {cancelable: false},
       );
     }

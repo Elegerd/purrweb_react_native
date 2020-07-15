@@ -23,15 +23,15 @@ import {
   shadowColor,
 } from '../../styles';
 import {useDispatch, useSelector} from 'react-redux';
-import {getCardComments} from '../../selectors/commentSelecotr';
-import {addComment, removeComment} from '../../routines/commentRoutines';
-import {changeCard} from '../../routines/cardRoutines';
+import {getCardComments} from '../../store/selectors/commentSelecotr';
+import {addComment, removeComment} from '../../store/routines/commentRoutines';
+import {changeCard} from '../../store/routines/cardRoutines';
 import {SwipeRow} from 'react-native-swipe-list-view';
 import CustomInput from '../../components/CustomInput/CustomInput';
-import CommentItem from '../../components/CommentItem/CommentItem';
+import CommentItem from './CommentItem/CommentItem';
 import {Input} from 'react-native-elements';
 import Icon from '../../components/CustomIcon/CustomIcon';
-import {getCardById} from '../../selectors/cardSelector';
+import {getCardById} from '../../store/selectors/cardSelector';
 
 const CardDetails = ({
   route: {

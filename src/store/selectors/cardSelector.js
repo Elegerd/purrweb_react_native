@@ -1,5 +1,4 @@
 import {createSelector} from 'reselect';
-import {getColumns} from './columnSelector';
 
 export const getCards = (state) => state.cards.data;
 

@@ -4,7 +4,7 @@ import {fetchColumn} from '../routines/columnRoutines';
 import {fetchCard} from '../routines/cardRoutines';
 import {fetchComment} from '../routines/commentRoutines';
 
-import {fetchAllDataRequest} from '../utils/fetchData';
+import {fetchAllDataRequest} from '../../utils/fetchData';
 
 export function* fetchDataWatcherSaga() {
   yield takeEvery(fetchAllData.TRIGGER, fetchDataFlow);

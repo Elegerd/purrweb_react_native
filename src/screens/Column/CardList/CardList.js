@@ -19,11 +19,15 @@ import {
   paddingHorizontal,
   safeColor,
   shadowColor,
-} from '../../styles';
-import CardItem from '../../components/CardItem/CardItem';
-import Icon from '../CustomIcon/CustomIcon';
-import {addCard, changeCard, removeCard} from '../../routines/cardRoutines';
-import {ColumnContext} from '../../screens/Column/Column';
+} from '../../../styles';
+import CardItem from '../CardItem/CardItem';
+import Icon from '../../../components/CustomIcon/CustomIcon';
+import {
+  addCard,
+  changeCard,
+  removeCard,
+} from '../../../store/routines/cardRoutines';
+import {ColumnContext} from '../Column';
 
 const CardList = ({
   navigation,
@@ -57,7 +61,7 @@ const CardList = ({
   };
 
   const handleOnClickRemoveCard = (cardId) => () => {
-    dispatch(removeCard(cardId));
+    dispatch(removeCard({cardId}));
   };
 
   const handleOnChange = (e) => {

@@ -2,10 +2,10 @@ import React, {useEffect} from 'react';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {inactiveColor, secondColor} from '../../styles';
 import {useSelector} from 'react-redux';
-import {getFilterColumnCards} from '../../selectors/cardSelector';
-import CardList from '../../components/CardList/CardList';
+import {getFilterColumnCards} from '../../store/selectors/cardSelector';
+import CardList from './CardList/CardList';
 import PropTypes from 'prop-types';
-import {getColumnById} from '../../selectors/columnSelector';
+import {getColumnById} from '../../store/selectors/columnSelector';
 
 const Tab = createMaterialTopTabNavigator();
 export const ColumnContext = React.createContext();

@@ -2,11 +2,14 @@ import React, {useEffect} from 'react';
 import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {backgroundColor, paddingHorizontal} from '../../styles';
-import {fetchAllData} from '../../routines/dataRoutines';
-import {getColumnIsLoading, getColumns} from '../../selectors/columnSelector';
-import ColumnItem from '../../components/ColumnItem/ColumnItem';
+import {fetchAllData} from '../../store/routines/dataRoutines';
+import {
+  getColumnIsLoading,
+  getColumns,
+} from '../../store/selectors/columnSelector';
+import ColumnItem from './ColumnItem/ColumnItem';
 import Splash from '../Splash/Splash';
-import {getIsAuth} from '../../selectors/authSelector';
+import {getIsAuth} from '../../store/selectors/authSelector';
 
 const Board = ({navigation}) => {
   const dispatch = useDispatch();

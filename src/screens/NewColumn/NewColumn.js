@@ -1,10 +1,10 @@
 import React from 'react';
 import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
 import {backgroundColor, paddingHorizontal} from '../../styles';
-import {addColumn} from '../../routines/columnRoutines';
+import {addColumn} from '../../store/routines/columnRoutines';
 import {useDispatch, useSelector} from 'react-redux';
-import NewColumnForm from '../../components/NewColumnForm/NewColumnForm';
-import {getColumnIsLoading} from '../../selectors/columnSelector';
+import NewColumnForm from './NewColumnForm/NewColumnForm';
+import {getColumnIsLoading} from '../../store/selectors/columnSelector';
 import Splash from '../Splash/Splash';
 
 const NewColumn = () => {

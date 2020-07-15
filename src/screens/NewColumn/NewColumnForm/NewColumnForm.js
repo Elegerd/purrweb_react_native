@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {reduxForm, Field} from 'redux-form';
 import {View, StyleSheet} from 'react-native';
-import CustomField from '../CustomField/CustomField';
-import CustomButton from '../CustomButton/CustomButton';
-import {maxLength, minLength, required} from '../../utils/validations';
+import CustomField from '../../../components/CustomField/CustomField';
+import CustomButton from '../../../components/CustomButton/CustomButton';
+import {maxLength, minLength, required} from '../../../utils/validations';
 
 const titleValidate = [minLength(2), maxLength(32), required];
 

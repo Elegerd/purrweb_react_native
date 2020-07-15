@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {StyleSheet, TouchableOpacity, Text} from 'react-native';
-import {borderColor, fontColor, fontFamily, fontSize} from '../../styles';
+import {borderColor, fontColor, fontFamily, fontSize} from '../../../styles';
 
 const ColumnItem = ({column, handleOnClick}) => (
   <TouchableOpacity style={styles.container} onPress={handleOnClick}>
