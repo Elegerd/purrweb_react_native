@@ -2,8 +2,16 @@ export const handleTrigger = (routine) => {
   return {
     [routine.TRIGGER]: (state) => ({
       ...state,
-      loading: true,
       error: null,
+    }),
+  };
+};
+
+export const handleRequest = (routine) => {
+  return {
+    [routine.REQUEST]: (state) => ({
+      ...state,
+      loading: true,
     }),
   };
 };

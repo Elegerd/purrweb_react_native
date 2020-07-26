@@ -11,6 +11,7 @@ import {
   handleFailure,
   handleFulfill,
   handleSuccess,
+  handleRequest,
   handleTrigger,
 } from '../baseHandle';
 
@@ -22,6 +23,7 @@ const initialState = {
 
 const handleAddColumn = {
   ...handleTrigger(addColumn),
+  ...handleRequest(addColumn),
   ...handleSuccess(addColumn),
   ...handleFailure(addColumn),
   ...handleFulfill(addColumn),
@@ -29,6 +31,7 @@ const handleAddColumn = {
 
 const handleChangeColumn = {
   ...handleTrigger(changeColumn),
+  ...handleRequest(changeColumn),
   ...handleSuccess(changeColumn),
   ...handleFailure(changeColumn),
   ...handleFulfill(changeColumn),
@@ -36,6 +39,7 @@ const handleChangeColumn = {
 
 const handleRemoveColumn = {
   ...handleTrigger(removeColumn),
+  ...handleRequest(removeColumn),
   ...handleSuccess(removeColumn),
   ...handleFailure(removeColumn),
   ...handleFulfill(removeColumn),
@@ -49,6 +53,7 @@ const handleFetchAllData = {
 
 const handleFetchColumn = {
   ...handleTrigger(fetchColumn),
+  ...handleRequest(fetchColumn),
   ...handleSuccess(fetchColumn),
   ...handleFailure(fetchColumn),
   ...handleFulfill(fetchColumn),

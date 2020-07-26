@@ -12,7 +12,9 @@ export function* fetchDataWatcherSaga() {
 
 function* fetchDataFlow() {
   try {
-    yield put(fetchAllData.request());
+    yield put(fetchColumn.request());
+    yield put(fetchComment.request());
+    yield put(fetchCard.request());
     const response = yield call(fetchAllDataRequest);
     yield put(fetchColumn.success(response.columns));
     yield put(fetchCard.success(response.cards));

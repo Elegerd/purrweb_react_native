@@ -11,6 +11,7 @@ import {logOut} from '../routines/authRoutines';
 import {createReducer} from '../createReducer';
 import {
   handleTrigger,
+  handleRequest,
   handleSuccess,
   handleFailure,
   handleFulfill,
@@ -24,6 +25,7 @@ const initialState = {
 
 const handleAddCard = {
   ...handleTrigger(addCard),
+  ...handleRequest(addCard),
   ...handleSuccess(addCard),
   ...handleFailure(addCard),
   ...handleFulfill(addCard),
@@ -31,6 +33,7 @@ const handleAddCard = {
 
 const handleRemoveCard = {
   ...handleTrigger(removeCard),
+  ...handleRequest(removeCard),
   ...handleSuccess(removeCard),
   ...handleFailure(removeCard),
   ...handleFulfill(removeCard),
@@ -38,6 +41,7 @@ const handleRemoveCard = {
 
 const handleChangeCard = {
   ...handleTrigger(changeCard),
+  ...handleRequest(changeCard),
   ...handleSuccess(changeCard),
   ...handleFailure(changeCard),
   ...handleFulfill(changeCard),
@@ -51,6 +55,7 @@ const handleFetchAllData = {
 
 const handleFetchCard = {
   ...handleTrigger(fetchCard),
+  ...handleRequest(fetchCard),
   ...handleSuccess(fetchCard),
   ...handleFailure(fetchCard),
   ...handleFulfill(fetchCard),

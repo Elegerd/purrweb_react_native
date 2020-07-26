@@ -10,6 +10,7 @@ import {
   handleFailure,
   handleFulfill,
   handleSuccess,
+  handleRequest,
   handleTrigger,
 } from '../baseHandle';
 
@@ -21,6 +22,7 @@ const initialState = {
 
 const handleAddComment = {
   ...handleTrigger(addComment),
+  ...handleRequest(addComment),
   ...handleSuccess(addComment),
   ...handleFailure(addComment),
   ...handleFulfill(addComment),
@@ -28,6 +30,7 @@ const handleAddComment = {
 
 const handleRemoveComment = {
   ...handleTrigger(removeComment),
+  ...handleRequest(removeComment),
   ...handleSuccess(removeComment),
   ...handleFailure(removeComment),
   ...handleFulfill(removeComment),
@@ -41,6 +44,7 @@ const handleFetchAllData = {
 
 const handleFetchComment = {
   ...handleTrigger(fetchComment),
+  ...handleRequest(fetchComment),
   ...handleSuccess(fetchComment),
   ...handleFailure(fetchComment),
   ...handleFulfill(fetchComment),

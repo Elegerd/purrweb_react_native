@@ -4,6 +4,7 @@ import {
   handleFailure,
   handleFulfill,
   handleSuccess,
+  handleRequest,
   handleTrigger,
 } from '../baseHandle';
 
@@ -15,6 +16,7 @@ const initialState = {
 
 const handleSignIn = {
   ...handleTrigger(signIn),
+  ...handleRequest(signIn),
   ...handleSuccess(signIn),
   ...handleFailure(signIn),
   ...handleFulfill(signIn),
@@ -22,6 +24,7 @@ const handleSignIn = {
 
 const handleSignUp = {
   ...handleTrigger(signUp),
+  ...handleRequest(signUp),
   ...handleSuccess(signUp),
   ...handleFailure(signUp),
   ...handleFulfill(signUp),
